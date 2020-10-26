@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Lab2;
 using NUnit.Framework;
@@ -5,7 +6,6 @@ namespace Tests
 {
     public class Tests
     {
-
         [Test]
         public void TestDeliverProducts()
         {
@@ -15,6 +15,18 @@ namespace Tests
             Assert.AreEqual("Black Monster Energy Ultra", shop1.GetProductName(100));
             Assert.AreEqual(90, shop1.GetProductPrice(100));
             Assert.AreEqual(20, shop1.GetProductQuantity(100));
+            try {
+                shop1.DeliverProducts(100, "Water", 10, 20);
+                Assert.Fail();
+            } catch (UserException e) {
+                Assert.AreEqual("There is already a Product with Code 100 in the Shop №1", e.Message);
+            }
+            try {
+                shop1.DeliverProducts(100, "Water2", 0, 20);
+                Assert.Fail();
+            } catch (UserException e) {
+                Assert.AreEqual("Product's Price can't be 0!", e.Message);
+            }
         }
 
         [Test]
@@ -82,6 +94,14 @@ namespace Tests
             Assert.AreEqual(4, myShops.FindCheapestSource(107));
             Assert.AreEqual(1, myShops.FindCheapestSource(108));
             Assert.AreEqual(2, myShops.FindCheapestSource(109));
+            try
+            {
+                myShops.FindCheapestSource(200);
+                Assert.Fail();
+            } catch (UserException e) {
+                Assert.AreEqual("No Product in the Shop №1 with Code 200!", e.Message);
+            }
+            
         }
 
         [Test]
@@ -169,7 +189,27 @@ namespace Tests
             pack1.Add(109, 2);
             
             Assert.AreEqual(33415, shop1.SellPackage(pack1));
-           // Assert.AreEqual(33415, shop1.SellPackage(pack1));
+            
+            var shop2 = new Shop(2,"Дикси", "Саблинская ул., 13/15");
+            try
+            {
+                shop2.SellPackage(pack1);
+                Assert.Fail();
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual("No Product in the Shop №2 with Code 100!",e.Message);
+            }
+            shop2.DeliverProducts(100, "Black Monster Energy Ultra", 75, 5);
+            try
+            {
+                shop2.SellPackage(pack1);
+                Assert.Fail();
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual("Shop №2 can't sell enough Product №100 !",e.Message);
+            }
         }
 
         [Test]
@@ -233,7 +273,20 @@ namespace Tests
             pack1.Add(106, 10);
             pack1.Add(109, 2);
             
-            Assert.AreEqual(2, myShops.FindCheapestSource(pack1));
+            Package pack2 = new Package();
+            pack2.Add(100, 10);
+            pack2.Add(100, 5);
+            pack2.Add(106, 1000);
+            pack2.Add(109, 2);
+            try
+            {
+                myShops.FindCheapestSource(pack2);
+                Assert.Fail();
+            }
+            catch (Exception e)
+            {
+                Assert.AreEqual("Can't buy all products in any shop.", e.Message);
+            }
         }
     }
 }

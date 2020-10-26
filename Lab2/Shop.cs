@@ -7,7 +7,7 @@ namespace Lab2
 {
     public class Shop
     {
-        private Dictionary<int, Product> _store;
+        private readonly Dictionary<int, Product> _store;
 
         public int Code { get; private set; }
         private string Name { get; set; }
@@ -39,21 +39,21 @@ namespace Lab2
         {
             if (_store.Keys.Contains(productCode))
                 return _store[productCode].Name;
-            throw new UserException("No Product in the Shop №" + this.Code + " !");
+            throw new UserException("No Product in the Shop №" + this.Code + " with Code " + productCode + '!');
         }
         
         public double GetProductPrice(int productCode)
         {
             if(_store.Keys.Contains(productCode))
                 return _store[productCode].Price;
-            throw new UserException("No Product in the Shop №" + this.Code + " !");
+            throw new UserException("No Product in the Shop №" + this.Code + " with Code " + productCode + '!');
         }
 
         public int GetProductQuantity(int productCode)
         {
             if (_store.Keys.Contains(productCode))
                 return _store[productCode].Quantity;
-            throw new UserException("No Product in the Shop №" + this.Code + " !");
+            throw new UserException("No Product in the Shop №" + this.Code + " with Code " + productCode + '!');
         }
 
         public List<int> GetProductCodes(string productName)
@@ -82,6 +82,8 @@ namespace Lab2
             double totalPrice = 0.0;
             foreach (var pair in productPack.Pack)
             {
+                if(!_store.ContainsKey(pair.Key))
+                    throw new UserException("No Product in the Shop №" + this.Code + " with Code " + pair.Key + '!');
                 var product = _store[pair.Key];
                 if (product.Quantity < pair.Value)
                     throw new UserException("Shop №" + this.Code + " can't sell enough Product №" + pair.Key + " !");

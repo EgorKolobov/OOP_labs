@@ -7,7 +7,7 @@ namespace Lab2
 {
     public class StoreChain
     {
-        public List<Shop> Shops { get; private set; }
+        private List<Shop> Shops { get; set; }
 
         public StoreChain()
         {
