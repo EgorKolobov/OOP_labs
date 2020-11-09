@@ -3,32 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 namespace Lab3
 {
-    public class Race
+    public class Race : Race<Transport>
+    {
+        public Race(double distance, List<Transport> racers) : base(distance,  racers) {}
+    }
+    
+    public class Race<T> where T : Transport
     {
         private double Distance { get; set; }
-        private readonly List<Transport> _racers;
-        private Transport Winner {get; set; }
+        private readonly List<T> _racers;
+        private T Winner {get; set; }
 
-        public Race() {}
-
-        public Race(double distance, List<Transport> racers)
+        public Race(double distance, List<T> racers)
         {
             Distance = distance;
             _racers = racers;
         }
 
-        public Transport GetWinner()
+        public T GetWinner()
         {
             var time = Double.MaxValue;
             foreach (var racer in _racers)
             {
-                var t = racer.Run(Distance);
+                double t = racer.Run(Distance);
                 if (t >= time) continue;
                 time = t;
                 Winner = racer;
             }
             return Winner;
         }
-
     }
 }

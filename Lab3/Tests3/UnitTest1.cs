@@ -18,7 +18,7 @@ namespace Tests3
             var plane = new Plane();
             var stupa = new Stupa();
             var airRacers = new List<AirTransport>() {broom, plane, stupa};
-            var airRace =new AirRace(5000, airRacers);
+            var airRace = new AirRace(5000, airRacers);
             var airWinner = airRace.GetWinner();
             Assert.AreEqual(broom, airWinner);
         }
@@ -45,7 +45,7 @@ namespace Tests3
             var dblHumpedCamell = new DblHumpedCamell();
             var fastCamell = new FastCamell();
             var boots = new Boots();
-            var kent =new Kentavr();
+            var kent = new Kentavr();
             var racers = new List<Transport>() {boots, kent, fastCamell, dblHumpedCamell, broom, plane, stupa};
             var commonRace = new Race(10000, racers);
             var winner = commonRace.GetWinner();

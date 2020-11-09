@@ -11,7 +11,7 @@ namespace Lab3
             Name = name;
             Speed = speed;
         }
-        
+
         public abstract double Run(double distance);
 
         public virtual void Info() { }
