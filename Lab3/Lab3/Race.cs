@@ -8,7 +8,6 @@ namespace Lab3
         private double Distance { get; set; }
         private readonly List<Transport> _racers;
         private Transport Winner {get; set; }
-        private double Time { get; set; }
 
         public Race() {}
 
@@ -16,16 +15,16 @@ namespace Lab3
         {
             Distance = distance;
             _racers = racers;
-            Time = Double.MaxValue;
         }
 
-        public virtual Transport GetWinner()
+        public Transport GetWinner()
         {
+            var time = Double.MaxValue;
             foreach (var racer in _racers)
             {
                 var t = racer.Run(Distance);
-                if (t >= Time) continue;
-                Time = t;
+                if (t >= time) continue;
+                time = t;
                 Winner = racer;
             }
             return Winner;

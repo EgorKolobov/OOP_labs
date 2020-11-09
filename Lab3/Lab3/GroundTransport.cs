@@ -3,47 +3,39 @@ using System.Collections.Generic;
 using System.Linq;
 namespace Lab3
 {
-    public class GroundTransport : Transport
+    public abstract class GroundTransport : Transport
     {
         private double RestInterval { get; set; } // час
-        private int StopNum { get; set; }
-        private Formula RestDuration{ get; set; } // час
 
-        public GroundTransport(string name, double speed, double restInterval, Formula rest) : base(name, speed)
+        public GroundTransport(string name, double speed, double restInterval) : base(name, speed)
         {
-            RestDuration = rest;
             RestInterval = restInterval;
-            StopNum = 0;
         }
         
-        public GroundTransport(string name, double speed, double restInterval, string rest) : base(name, speed)
+         public override double Run(double distance)
         {
-            RestDuration = new Formula(rest);
-            RestInterval = restInterval;
-            StopNum = 0;
-        }
-
-        public override double Run(double distance)
-        {
+            double time = 0.0;
+            var stopNum = 1;
             while (distance > 0)
             {
                 distance -= Speed * RestInterval;
-                Time += RestInterval;
+                time += RestInterval;
                 if (distance <= 0)
                     break;
-                Time += RestDuration.Count(StopNum);
-                StopNum++;
+                time += RestDuration(stopNum);
+                stopNum++;
             }
-            return Time;
+            return time;
         }
+
+        public abstract double RestDuration(int n);
         
-        /*public override void Info()
+        public override void Info()
         {
             Console.WriteLine("Name: " + Name);
             Console.WriteLine("Speed: " + Speed);
             Console.WriteLine("RestInterval: " + RestInterval);
-            Console.WriteLine("Time: " + Time);
-        }*/
+        }
         
     }
 }

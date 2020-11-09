@@ -8,26 +8,25 @@ namespace Lab3
         private double Distance { get; set; }
         private readonly List<GroundTransport> _racers;
         private GroundTransport Winner {get; set; }
-        private double Time { get; set; }
 
         public GroundRace(double distance, List<GroundTransport> racers)
         {
             Distance = distance;
             _racers = racers;
-            Time = Double.MaxValue;
         }
-
-        public override Transport GetWinner()
+        
+        public GroundTransport GetWinner()
         {
+            var time = Double.MaxValue;
             foreach (var racer in _racers)
             {
                 var t = racer.Run(Distance);
-                if (t >= Time) continue;
-                Time = t;
+                if (t >= time) continue;
+                time = t;
                 Winner = racer;
             }
             return Winner;
         }
-        
+
     }
 }
