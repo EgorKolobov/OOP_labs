@@ -11,7 +11,7 @@ namespace Lab4
             MaxMemory = maxMemory;
         }
 
-        public int GetLimit(Backup myBackup)
+        public override int GetLimit(Backup myBackup)
         {
             int extra1 = myBackup.RestorePoints.Count-1;
             long totalSize = 0;
@@ -24,15 +24,10 @@ namespace Lab4
                     break;
                 }
             }
-            var extra2 = extra1;
-            if (totalSize <= MaxMemory || extra2 <=0)
+            if (totalSize <= MaxMemory || extra1 <=0)
                 return 0;
-            
-            while (extra2 > 0 && myBackup.RestorePoints[extra2].GetType() == typeof(DeltaRestorePoint))
-                extra2--;
-            if(extra2<extra1)
-                throw new UserException("Memory Limit: Can't leave delta point without restore point.");
-            return extra2;
+
+            return CleanDeltas(myBackup, extra1);
         }
     }
 }
