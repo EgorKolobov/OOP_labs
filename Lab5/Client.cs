@@ -1,35 +1,50 @@
+using System;
 using System.Collections.Generic;
 
 namespace Lab5
 {
     public class Client
     {
-        private string Name { get; set; }
-        private string Surname { get; set; }
-        private string Address { get; set; }
-        private long PassportId { get; set; }
+        private string _name;
+        private string _surname;
+        private string _address;
+        private long _passportId;
         private bool Unverified { get; set; }
         public List<int> AccountId { get; private set; }
-
-        public Client(string name, string surname)
+        
+        public void SetName(string name)
         {
-            Name = name;
-            Surname = surname;
-            Unverified = true;
-            AccountId = new List<int>();
+            _name = name;
         }
         
+        public void SetSurname(string surname)
+        {
+            _surname = surname;
+        }
         public void SetAddress(string address)
         {
-            Address = address;
+            _address = address;
             Unverified = false;
         }
         
-        public void SetPassportId(int id)
+        public void SetPassportId(long passportId)
         {
-            PassportId = id;
+            _passportId = passportId;
             Unverified = false;
         }
+
+        public Client()
+        {
+            AccountId = new List<int>();
+            Unverified = true;
+        }
+        /*public Client(Client template)
+        {
+            SetName(template.Name);
+            SetSurname(template.Surname);
+            SetAddress(template.Address);
+            SetPassportId(template.PassportId);
+        }*/
         /*-------------------------- Transactions --------------------------*/
         public void Replenishment(string myBankName, int id, double money)
         {
