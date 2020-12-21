@@ -16,9 +16,12 @@ namespace Lab5Tests
             
             masterCard.AddBank(tinkoff);
             
-            var me = new Client("Егор","Колобов" );
-            me.SetAddress("Санкт-Петербург");
-            me.SetPassportId(228666420);
+            var builder = new ClientBuilder();
+            builder.SetName("Егор");
+            builder.SetSurname("Колобов");
+            builder.SetAddress("Санкт-Петербург");
+            builder.SetPassportID(228666420);
+            var me = builder.GetClient();
 
             me.AddAccount("Тинькофф", "debit", 100000);// 100 000, Bonus = 0
             masterCard.DailyUpdate(); // Bonus += 10
@@ -43,9 +46,12 @@ namespace Lab5Tests
 
             masterCard.AddBank(tinkoff);
             
-            var me = new Client("Егор","Колобов" );
-            me.SetAddress("Санкт-Петербург");
-            me.SetPassportId(228666420);
+            var builder = new ClientBuilder();
+            builder.SetName("Егор");
+            builder.SetSurname("Колобов");
+            builder.SetAddress("Санкт-Петербург");
+            builder.SetPassportID(228666420);
+            var me = builder.GetClient();
             
             me.AddAccount("Тинькофф", "deposit", 1000000);
             
@@ -65,14 +71,19 @@ namespace Lab5Tests
             masterCard.AddBank(tinkoff);
             masterCard.AddBank(sber);
             
-            var me = new Client("Егор","Колобов" );
-            me.SetAddress("Санкт-Петербург");
-            me.SetPassportId(228666420);
+            var builder = new ClientBuilder();
+            builder.SetName("Егор");
+            builder.SetSurname("Колобов");
+            builder.SetAddress("Санкт-Петербург");
+            builder.SetPassportID(228666420);
+            var me = builder.GetClient();
 
-            var friend = new Client("Друг","Хороший" );
-            friend.SetAddress("Санкт-Петербург");
-            friend.SetPassportId(1488691337);
-            
+            builder.SetName("Друг");
+            builder.SetSurname("Хороший");
+            builder.SetAddress("Санкт-Петербург");
+            builder.SetPassportID(1488691337);
+            var friend = builder.GetClient();
+
             me.AddAccount("Тинькофф", "deposit", 100000); 
             friend.AddAccount("Сбер", "debit", 500000);
             
@@ -91,7 +102,10 @@ namespace Lab5Tests
 
             masterCard.AddBank(tinkoff);
             
-            var me = new Client("Егор","Колобов" );
+            var builder = new ClientBuilder();
+            builder.SetName("Егор");
+            builder.SetSurname("Колобов");
+            var me = builder.GetClient();
             
             me.AddAccount("Тинькофф", "debit", 100000);
             me.Withdrawal("Тинькофф", me.AccountId[0], 90000);
@@ -109,13 +123,18 @@ namespace Lab5Tests
             masterCard.AddBank(tinkoff);
             masterCard.AddBank(sber);
             
-            var me = new Client("Егор","Колобов" );
-            me.SetAddress("Санкт-Петербург");
-            me.SetPassportId(228666420);
+            var builder = new ClientBuilder();
+            builder.SetName("Егор");
+            builder.SetSurname("Колобов");
+            builder.SetAddress("Санкт-Петербург");
+            builder.SetPassportID(228666420);
+            var me = builder.GetClient();
 
-            var friend = new Client("Друг","Хороший" );
-            friend.SetAddress("Санкт-Петербург");
-            friend.SetPassportId(1488691337);
+            builder.SetName("Друг");
+            builder.SetSurname("Хороший");
+            builder.SetAddress("Санкт-Петербург");
+            builder.SetPassportID(1488691337);
+            var friend = builder.GetClient();
             
             me.AddAccount("Тинькофф", "deposit", 100); 
             friend.AddAccount("Сбер", "debit", 500); 
